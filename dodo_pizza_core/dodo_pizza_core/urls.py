@@ -17,7 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from products.views import PizzaListAPIView, PizzaDetailAPIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/pizza')
+    path('api/v1/pizzas/', PizzaListAPIView.as_view(), name='pizza-list'),
+    path('api/v1/pizzas/<int:pk>/', PizzaDetailAPIView.as_view(), name='pizza-detail'),
 ]
