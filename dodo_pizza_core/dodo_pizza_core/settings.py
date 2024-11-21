@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'products',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,8 @@ WSGI_APPLICATION = 'dodo_pizza_core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -101,6 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

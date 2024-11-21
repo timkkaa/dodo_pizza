@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from products.views import PizzaListAPIView, PizzaDetailAPIView, DrinkDetailAPIView, DrinkListAPIView
+from users.views import UserRegistrationAPIView, UserLoginApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,6 @@ urlpatterns = [
     path('api/v1/pizzas/<int:pk>/', PizzaDetailAPIView.as_view(), name='pizza-detail'),
     path('api/v1/drinks/', DrinkListAPIView.as_view(), name='drink-list'),
     path('api/v1/drinks/<int:pk>/', DrinkDetailAPIView.as_view(), name='drink-detail'),
+    path('api/v1/user/registration/', UserRegistrationAPIView.as_view(), name='user-registration-url'),
+    path('api/v1/user/login/', UserLoginApiView.as_view(), name='user-login-url'),
 ]
