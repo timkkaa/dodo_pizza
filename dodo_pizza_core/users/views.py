@@ -25,7 +25,7 @@ class UserRegistrationAPIView(APIView):
                 'message': 'Такой пользователь уже существует'
             })
 
-        token, created = Token.objacts.get_or_create(user=new_user)
+        token, created = Token.objects.get_or_create(user=new_user)
 
         return Response(
             status=201,
@@ -58,3 +58,7 @@ class UserLoginApiView(APIView):
             return Response(status=400,
                             data={'message': 'Пожалуйста, укажите номер телефона и пароль.'})
 
+class SayHelloAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_user = request.user
+        return Response(status=200, data={'massage':f'Приве {current_user.first_name}'})
