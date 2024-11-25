@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from products.models import Pizza
 from users.managers import CustomUserManager
 
 
@@ -22,3 +23,9 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Кастомные пользователи'
         verbose_name = 'Кастомный пользователь'
 
+class UserPizzaComment(models.Model):
+    comment_text = models.TextField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comments')
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, related_name='comments')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

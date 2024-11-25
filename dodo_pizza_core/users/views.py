@@ -61,4 +61,5 @@ class UserLoginApiView(APIView):
 class SayHelloAPIView(APIView):
     def get(self, request, *args, **kwargs):
         current_user = request.user
-        return Response(status=200, data={'massage':f'Приве {current_user.first_name}'})
+        return Response(status=200, data={'massage': f'Приве {current_user.first_name}'})
+
