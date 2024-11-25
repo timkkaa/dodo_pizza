@@ -1,9 +1,12 @@
 from django.db import IntegrityError
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from users.models import CustomUser
+
+from products.models import Pizza
+from users.models import CustomUser, UserPizzaComment
 
 
 class UserRegistrationAPIView(APIView):
@@ -63,3 +66,19 @@ class SayHelloAPIView(APIView):
         current_user = request.user
         return Response(status=200, data={'massage': f'Приве {current_user.first_name}'})
 
+
+class PizzaCommentAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, *args, **kwargs):
+        request_body = request.data
+        current_user = request.user
+        try:
+            pizza = Pizza.objects.get(id=kwargs['pk'])
+        except Pizza.DoesNotExist:
+            return Response(status=404, data={'message': 'Такой пиццы не существует.'})
+        UserPizzaComment.objects.create(
+            comment_text=request_body['comment_text'],
+            user=current_user,
+            pizza=pizza,
+        )
+        return Response(status=201, data={'message': 'Комментарий успешно добавлен!'})
